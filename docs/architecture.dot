@@ -1,0 +1,162 @@
+digraph AWS_EKS_CloudWatch_Architecture {
+
+  rankdir=TB;
+  splines=true;
+  nodesep=0.8;
+  ranksep=1.0;
+
+  bgcolor="white";
+
+  node [
+    shape=box,
+    style="rounded,filled",
+    fillcolor=lightblue,
+    color=black,
+    fontname="Helvetica",
+    fontsize=12
+  ];
+
+  edge [
+    color=gray40,
+    penwidth=1.5,
+    arrowsize=0.8
+  ];
+
+  Student [
+    shape=oval,
+    fillcolor=lightgreen,
+    label="DevOps Engineer / Student"
+  ];
+
+  AWSCLI [
+    shape=component,
+    fillcolor=orange,
+    label="AWS CLI\nLocal Machine"
+  ];
+
+  EKS [
+    shape=box3d,
+    fillcolor=lightyellow,
+    label="Amazon EKS Cluster"
+  ];
+
+  Nodes [
+    fillcolor=lightcyan,
+    label="Managed Worker Nodes\n(t3.medium)"
+  ];
+
+  Kubectl [
+    fillcolor=khaki,
+    label="kubectl\nKubernetes Management"
+  ];
+
+  StoreApp [
+    shape=folder,
+    fillcolor=lightpink,
+    label="Store Microservices App\naks-store.yaml"
+  ];
+
+  Pods [
+    fillcolor=lavender,
+    label="Kubernetes Pods\nstore-front\norder-service"
+  ];
+
+  Service [
+    fillcolor=lightsteelblue1,
+    label="Kubernetes Service\nLoadBalancer"
+  ];
+
+  ELB [
+    shape=box3d,
+    fillcolor=lightgoldenrod1,
+    label="AWS Elastic Load Balancer"
+  ];
+
+  Users [
+    shape=oval,
+    fillcolor=lightgreen,
+    label="End Users / Browser"
+  ];
+
+  CloudWatch [
+    shape=component,
+    fillcolor=tomato,
+    label="Amazon CloudWatch\nContainer Insights"
+  ];
+
+  FluentBit [
+    fillcolor=mistyrose,
+    label="Fluent Bit\nLog Collection"
+  ];
+
+  Metrics [
+    fillcolor=thistle,
+    label="Metrics & Monitoring"
+  ];
+
+  Logs [
+    shape=folder,
+    fillcolor=white,
+    label="CloudWatch Log Groups\nApplication Logs\nHost Logs\nDataplane Logs"
+  ];
+
+  Student -> AWSCLI [
+    label="Configure AWS"
+  ];
+
+  AWSCLI -> EKS [
+    label="Create Cluster"
+  ];
+
+  AWSCLI -> Kubectl [
+    label="Update kubeconfig"
+  ];
+
+  Kubectl -> EKS [
+    label="Manage Cluster"
+  ];
+
+  EKS -> Nodes [
+    label="Provision Nodes"
+  ];
+
+  Kubectl -> StoreApp [
+    label="Deploy YAML"
+  ];
+
+  StoreApp -> Pods [
+    label="Create Pods"
+  ];
+
+  Pods -> Service [
+    label="Expose Services"
+  ];
+
+  Service -> ELB [
+    label="Provision LoadBalancer"
+  ];
+
+  ELB -> Users [
+    label="Public Access"
+  ];
+
+  EKS -> CloudWatch [
+    label="Enable Monitoring"
+  ];
+
+  CloudWatch -> FluentBit [
+    label="Collect Logs"
+  ];
+
+  CloudWatch -> Metrics [
+    label="Collect Metrics"
+  ];
+
+  FluentBit -> Logs [
+    label="Send Logs"
+  ];
+
+  Metrics -> Logs [
+    label="Store Metrics"
+  ];
+}
