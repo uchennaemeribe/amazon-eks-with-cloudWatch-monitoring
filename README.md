@@ -1259,6 +1259,8 @@ This automatically deletes:
 - VPC Resources
 - IAM Resources
 
+![EKS Cluster Deletion](screenshots/eks-cluster-deletion.png)
+
 # 🚀 LAB 18 — Update GitHub Repo
 
 1. Authenticate GitHub CLI:
